@@ -22,7 +22,7 @@ export default function CourseCard({
         <img
           src={thumbnail}
           alt={title}
-          className="w-full h-48 object-cover"
+          className="w-full h-52 md:h-48 object-cover"
         />
 
         <div className="p-6">

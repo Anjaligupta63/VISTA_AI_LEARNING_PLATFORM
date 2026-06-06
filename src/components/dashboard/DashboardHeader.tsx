@@ -1,12 +1,12 @@
 import { Bell, Search, Flame } from "lucide-react";
-
+import { user } from "@/data/user";
 export default function DashboardHeader() {
   return (
     <header className="flex items-center justify-between p-6 border-b border-slate-800">
 
       <div>
         <h1 className="text-3xl font-bold">
-          Good Afternoon, Anjali 👋
+          Good Afternoon, {user.name} 👋
         </h1>
 
         <p className="text-slate-400 mt-1">

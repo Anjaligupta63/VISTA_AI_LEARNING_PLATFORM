@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import { user } from "@/data/user";
 import {
   LayoutDashboard,
   BookOpen,
@@ -61,7 +61,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-72 min-h-screen border-r border-slate-800 bg-slate-900/60 backdrop-blur-xl flex flex-col">
+    <aside className="hidden lg:flex w-72 min-h-screen border-r border-slate-800 bg-slate-900/60 backdrop-blur-xl flex-col">
 
       {/* Logo */}
 
@@ -117,11 +117,11 @@ export default function Sidebar() {
         <div className="bg-white/5 rounded-2xl p-4">
 
           <h3 className="font-semibold">
-            Anjali Gupta
+            {user.name}
           </h3>
 
           <p className="text-sm text-slate-400">
-            Level 12 Explorer
+            Level {user.level} Explorer
           </p>
 
           <div className="w-full bg-slate-800 h-2 rounded-full mt-3">

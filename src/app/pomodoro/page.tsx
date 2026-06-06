@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
+import MobileNavbar from "@/components/dashboard/MobileNavbar";
 
 export default function PomodoroPage() {
   const [time, setTime] = useState(25 * 60);
@@ -27,60 +28,162 @@ export default function PomodoroPage() {
 
       <Sidebar />
 
-      <main className="flex-1 p-8">
+      <div className="flex-1">
 
-        <h1 className="text-4xl font-bold">
-          Focus Timer
-        </h1>
+        <MobileNavbar />
 
-        <p className="text-slate-400 mt-2">
-          Stay focused and improve productivity
-        </p>
+        <main className="p-8">
 
-        <div className="mt-10 max-w-xl mx-auto">
+          <h1 className="text-4xl font-bold">
+            Pomodoro Focus System
+          </h1>
 
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-10 text-center">
+          <p className="text-slate-400 mt-2">
+            Improve productivity with focused study sessions.
+          </p>
 
-            <h2 className="text-7xl font-bold mb-8">
+          {/* Stats */}
 
-              {String(minutes).padStart(2, "0")}:
-              {String(seconds).padStart(2, "0")}
+          <div className="grid md:grid-cols-3 gap-6 mt-8">
 
-            </h2>
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+              <p className="text-slate-400">
+                Today's Focus
+              </p>
 
-            <div className="flex justify-center gap-4">
+              <h2 className="text-4xl font-bold mt-2">
+                4.5h
+              </h2>
+            </div>
 
-              <button
-                onClick={() => setRunning(true)}
-                className="px-6 py-3 rounded-xl bg-green-600"
-              >
-                Start
-              </button>
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+              <p className="text-slate-400">
+                Current Streak
+              </p>
 
-              <button
-                onClick={() => setRunning(false)}
-                className="px-6 py-3 rounded-xl bg-yellow-600"
-              >
-                Pause
-              </button>
+              <h2 className="text-4xl font-bold mt-2">
+                12 Days
+              </h2>
+            </div>
 
-              <button
-                onClick={() => {
-                  setRunning(false);
-                  setTime(25 * 60);
-                }}
-                className="px-6 py-3 rounded-xl bg-red-600"
-              >
-                Reset
-              </button>
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+              <p className="text-slate-400">
+                Focus Coins
+              </p>
+
+              <h2 className="text-4xl font-bold mt-2">
+                420
+              </h2>
+            </div>
+
+          </div>
+
+          {/* Timer */}
+
+          <div className="max-w-2xl mx-auto mt-10">
+
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-10 text-center">
+
+              <div className="w-72 h-72 mx-auto rounded-full border-10 border-indigo-500 flex items-center justify-center">
+
+                <h2 className="text-7xl font-bold">
+
+                  {String(minutes).padStart(2, "0")}:
+                  {String(seconds).padStart(2, "0")}
+
+                </h2>
+
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-4 mt-10">
+
+                <button
+                  onClick={() => setRunning(true)}
+                  className="px-6 py-3 rounded-xl bg-green-600 hover:bg-green-500 transition"
+                >
+                  Start
+                </button>
+
+                <button
+                  onClick={() => setRunning(false)}
+                  className="px-6 py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 transition"
+                >
+                  Pause
+                </button>
+
+                <button
+                  onClick={() => {
+                    setRunning(false);
+                    setTime(25 * 60);
+                  }}
+                  className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 transition"
+                >
+                  Reset
+                </button>
+
+              </div>
 
             </div>
 
           </div>
 
-        </div>
+          {/* Modes */}
 
-      </main>
+          <div className="grid md:grid-cols-3 gap-6 mt-10">
+
+            <button
+              onClick={() => {
+                setRunning(false);
+                setTime(25 * 60);
+              }}
+              className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:border-indigo-500"
+            >
+              <h3 className="text-xl font-bold">
+                25 / 5
+              </h3>
+
+              <p className="text-slate-400 mt-2">
+                Classic Pomodoro
+              </p>
+            </button>
+
+            <button
+              onClick={() => {
+                setRunning(false);
+                setTime(50 * 60);
+              }}
+              className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:border-indigo-500"
+            >
+              <h3 className="text-xl font-bold">
+                50 / 10
+              </h3>
+
+              <p className="text-slate-400 mt-2">
+                Deep Work Session
+              </p>
+            </button>
+
+            <button
+              onClick={() => {
+                setRunning(false);
+                setTime(90 * 60);
+              }}
+              className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:border-indigo-500"
+            >
+              <h3 className="text-xl font-bold">
+                90 / 15
+              </h3>
+
+              <p className="text-slate-400 mt-2">
+                Intensive Focus
+              </p>
+            </button>
+
+          </div>
+
+        </main>
+
+      </div>
 
     </div>
   );
