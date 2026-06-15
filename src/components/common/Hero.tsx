@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -36,18 +38,25 @@ export default function Hero() {
         <p className="mt-8 text-xl text-slate-400 max-w-3xl mx-auto">
           Transform YouTube playlists into structured
           learning paths, AI notes, quizzes,
-          productivity systems and placement preparation.
+          flashcards, productivity systems and
+          placement preparation.
         </p>
 
-        <div className="mt-10 flex justify-center gap-5">
+        <div className="mt-10 flex justify-center gap-5 flex-wrap">
 
-          <button className="px-8 py-4 rounded-2xl bg-linear-to-r from-indigo-600 to-cyan-500 font-semibold shadow-lg shadow-indigo-500/30 hover:scale-105 transition">
+          <Link
+            href="/signup"
+            className="px-8 py-4 rounded-2xl bg-linear-to-r from-indigo-600 to-cyan-500 font-semibold shadow-lg shadow-indigo-500/30 hover:scale-105 transition"
+          >
             Start Learning
-          </button>
+          </Link>
 
-          <button className="px-8 py-4 rounded-2xl border border-slate-700 hover:bg-slate-800 transition">
-            View Demo
-          </button>
+          <Link
+            href="/login"
+            className="px-8 py-4 rounded-2xl border border-slate-700 hover:bg-slate-800 transition"
+          >
+            Login
+          </Link>
 
         </div>
 

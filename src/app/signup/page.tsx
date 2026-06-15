@@ -1,62 +1,90 @@
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import api from "@/lib/api";
 
 export default function SignupPage() {
+  const router = useRouter();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignup = async () => {
+    try {
+      const res = await api.post("/auth/signup", {
+        name,
+        email,
+        password,
+      });
+
+      console.log("Signup Success:", res.data);
+
+      alert("Account created successfully ✅");
+
+      router.push("/login");
+    } catch (error: any) {
+      console.log("Signup Error:", error);
+
+      console.log(
+        "Response:",
+        error?.response?.data
+      );
+
+      alert(
+        JSON.stringify(
+          error?.response?.data ||
+            "Signup failed"
+        )
+      );
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
+      <div className="w-full max-w-md bg-white/5 p-8 rounded-3xl border border-white/10">
+        <h1 className="text-3xl font-bold mb-6">
+          Create Account
+        </h1>
 
-      <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-3xl p-8">
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) =>
+            setName(e.target.value)
+          }
+          className="w-full p-3 rounded-lg bg-slate-800 mb-4"
+        />
 
-        <div className="text-center">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) =>
+            setEmail(e.target.value)
+          }
+          className="w-full p-3 rounded-lg bg-slate-800 mb-4"
+        />
 
-          <h1 className="text-4xl font-bold bg-linear-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
-            VISTA
-          </h1>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
+          className="w-full p-3 rounded-lg bg-slate-800 mb-4"
+        />
 
-          <p className="text-slate-400 mt-3">
-            Create Account
-          </p>
-
-        </div>
-
-        <div className="mt-8 space-y-4">
-
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="w-full p-4 rounded-xl bg-slate-900 border border-slate-700 outline-none"
-          />
-
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full p-4 rounded-xl bg-slate-900 border border-slate-700 outline-none"
-          />
-
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full p-4 rounded-xl bg-slate-900 border border-slate-700 outline-none"
-          />
-
-          <button className="w-full p-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition">
-            Create Account
-          </button>
-
-        </div>
-
-        <div className="mt-6 text-center">
-
-          <Link
-            href="/login"
-            className="text-indigo-400"
-          >
-            Already have an account? Login
-          </Link>
-
-        </div>
-
+        <button
+          onClick={handleSignup}
+          className="w-full p-3 rounded-lg bg-indigo-600 hover:bg-indigo-500"
+        >
+          Create Account
+        </button>
       </div>
-
     </div>
   );
 }

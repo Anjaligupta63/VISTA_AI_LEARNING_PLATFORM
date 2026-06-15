@@ -1,3 +1,5 @@
+import AuthGuard from "@/components/AuthGuard";
+
 import Sidebar from "@/components/dashboard/Sidebar";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import StatsCards from "@/components/dashboard/StatsCards";
@@ -7,25 +9,29 @@ import RecentActivity from "@/components/dashboard/RecentActivity";
 
 export default function DashboardPage() {
   return (
-    <div className="flex min-h-screen bg-slate-950 text-white">
+    <AuthGuard>
 
-      <Sidebar />
+      <div className="flex min-h-screen bg-slate-950 text-white">
 
-      <div className="flex-1">
+        <Sidebar />
 
-        <DashboardHeader />
+        <div className="flex-1">
 
-        <div className="p-8 space-y-8">
+          <DashboardHeader />
 
-          <StatsCards />
+          <div className="p-8 space-y-8">
 
-          <ContinueLearning />
+            <StatsCards />
 
-          <div className="grid lg:grid-cols-2 gap-6">
+            <ContinueLearning />
 
-            <GoalsCard />
+            <div className="grid lg:grid-cols-2 gap-6">
 
-            <RecentActivity />
+              <GoalsCard />
+
+              <RecentActivity />
+
+            </div>
 
           </div>
 
@@ -33,6 +39,6 @@ export default function DashboardPage() {
 
       </div>
 
-    </div>
+    </AuthGuard>
   );
 }

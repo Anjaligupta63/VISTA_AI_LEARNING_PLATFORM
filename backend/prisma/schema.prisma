@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+
+  createdAt DateTime @default(now())
+
+  courses Course[]
+}
+
+model Course {
+  id Int @id @default(autoincrement())
+
+  title       String
+  description String
+
+  progress Int @default(0)
+
+  videoUrl String?
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  notes      Note[]
+  quizzes    Quiz[]
+  flashcards Flashcard[]
+  createdAt  DateTime    @default(now())
+}
+
+model Note {
+  id Int @id @default(autoincrement())
+
+  content String
+
+  courseId Int
+  course   Course @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Quiz {
+  id Int @id @default(autoincrement())
+
+  question String
+  answer   String
+
+  courseId Int
+  course   Course @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Flashcard {
+  id        Int      @id @default(autoincrement())
+
+  question  String
+  answer    String
+
+  courseId  Int
+  course    Course   @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+model Goal {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  target    Int
+  completed Int      @default(0)
+
+  createdAt DateTime @default(now())
+}
+
+model Achievement {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+
+  unlocked    Boolean  @default(false)
+
+  userId      Int
+  createdAt   DateTime @default(now())
+}
+model FocusSession {
+  id        Int      @id @default(autoincrement())
+
+  userId    Int
+
+  duration  Int
+
+  createdAt DateTime @default(now())
+}

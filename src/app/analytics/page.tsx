@@ -1,7 +1,7 @@
 import Sidebar from "@/components/dashboard/Sidebar";
 import MobileNavbar from "@/components/dashboard/MobileNavbar";
 import AnalyticsChart from "@/components/dashboard/AnalyticsChart";
-
+import { dashboardData } from "@/data/dashboard";
 export default function AnalyticsPage() {
   return (
     <div className="flex min-h-screen bg-slate-950 text-white">
@@ -31,9 +31,9 @@ export default function AnalyticsPage() {
                 Focus Hours
               </p>
 
-              <h2 className="text-4xl font-bold mt-3">
-                128h
-              </h2>
+             <h2 className="text-4xl font-bold mt-3">
+  {dashboardData.focusHours}h
+</h2>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
@@ -42,8 +42,8 @@ export default function AnalyticsPage() {
               </p>
 
               <h2 className="text-4xl font-bold mt-3">
-                12
-              </h2>
+  {dashboardData.coursesCompleted}
+</h2>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
@@ -52,8 +52,8 @@ export default function AnalyticsPage() {
               </p>
 
               <h2 className="text-4xl font-bold mt-3">
-                91%
-              </h2>
+  {dashboardData.quizAccuracy}%
+</h2>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
@@ -62,8 +62,8 @@ export default function AnalyticsPage() {
               </p>
 
               <h2 className="text-4xl font-bold mt-3">
-                14 Days
-              </h2>
+  {dashboardData.streak} Days
+</h2>
             </div>
 
           </div>

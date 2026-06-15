@@ -1,107 +1,117 @@
+"use client";
+
+import {
+useEffect,
+useState,
+} from "react";
+
 import Sidebar from "@/components/dashboard/Sidebar";
+import api from "@/lib/api";
 
 export default function AchievementsPage() {
-  return (
-    <div className="flex min-h-screen bg-slate-950 text-white">
+const [
+achievements,
+setAchievements,
+] = useState<any[]>([]);
 
-      <Sidebar />
+useEffect(() => {
+fetchAchievements();
+}, []);
 
-      <main className="flex-1 p-8">
+const fetchAchievements =
+async () => {
+try {
+const token =
+localStorage.getItem(
+"token"
+);
 
-        <h1 className="text-4xl font-bold">
-          Achievements
-        </h1>
 
-        <p className="text-slate-400 mt-2">
-          Track your milestones and unlock rewards
-        </p>
+    const res =
+      await api.get(
+        "/achievements",
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      );
 
-        {/* XP Card */}
+    setAchievements(
+      res.data
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-        <div className="mt-8 bg-linear-to-r from-indigo-600 to-cyan-500 rounded-3xl p-8">
 
-          <h2 className="text-2xl font-bold">
-            Level 12 Explorer
-          </h2>
+return ( <div className="flex min-h-screen bg-slate-950 text-white">
 
-          <p className="mt-2">
-            XP: 2,450 / 3,000
-          </p>
+  <Sidebar />
 
-          <div className="w-full bg-white/20 h-3 rounded-full mt-4">
-            <div className="w-[82%] h-3 bg-white rounded-full" />
-          </div>
+  <div className="flex-1 p-8">
 
-        </div>
+    <h1 className="text-4xl font-bold mb-8">
+      Achievements
+    </h1>
 
-        {/* Achievement Cards */}
+    {achievements.length === 0 ? (
+      <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+        No achievements found.
+      </div>
+    ) : (
+      <div className="grid md:grid-cols-2 gap-6">
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        {achievements.map(
+          (
+            achievement,
+            index
+          ) => (
+            <div
+              key={index}
+              className={`rounded-3xl p-6 border ${
+                achievement.unlocked
+                  ? "bg-green-500/10 border-green-500/30"
+                  : "bg-white/5 border-white/10"
+              }`}
+            >
+              <h2 className="text-xl font-bold">
 
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-            <h3 className="text-2xl">🏅</h3>
-            <h4 className="font-bold mt-3">
-              First Course Completed
-            </h4>
-            <p className="text-slate-400 mt-2">
-              Complete your first course.
-            </p>
-          </div>
+                {achievement.unlocked
+                  ? "🏆"
+                  : "🔒"}{" "}
 
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-            <h3 className="text-2xl">🔥</h3>
-            <h4 className="font-bold mt-3">
-              7-Day Streak
-            </h4>
-            <p className="text-slate-400 mt-2">
-              Study for 7 consecutive days.
-            </p>
-          </div>
+                {
+                  achievement.title
+                }
 
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-            <h3 className="text-2xl">🧠</h3>
-            <h4 className="font-bold mt-3">
-              Quiz Master
-            </h4>
-            <p className="text-slate-400 mt-2">
-              Score above 90% in quizzes.
-            </p>
-          </div>
+              </h2>
 
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-            <h3 className="text-2xl">⏱</h3>
-            <h4 className="font-bold mt-3">
-              Focus Champion
-            </h4>
-            <p className="text-slate-400 mt-2">
-              Complete 100 focus hours.
-            </p>
-          </div>
+              <p className="text-slate-400 mt-2">
 
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-            <h3 className="text-2xl">📚</h3>
-            <h4 className="font-bold mt-3">
-              Knowledge Seeker
-            </h4>
-            <p className="text-slate-400 mt-2">
-              Review 100 flashcards.
-            </p>
-          </div>
+                Status:
 
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-            <h3 className="text-2xl">🚀</h3>
-            <h4 className="font-bold mt-3">
-              Placement Ready
-            </h4>
-            <p className="text-slate-400 mt-2">
-              Complete all DSA modules.
-            </p>
-          </div>
+                {" "}
 
-        </div>
+                {achievement.unlocked
+                  ? "Unlocked"
+                  : "Locked"}
 
-      </main>
+              </p>
 
-    </div>
-  );
+            </div>
+          )
+        )}
+
+      </div>
+    )}
+
+  </div>
+
+</div>
+
+
+);
 }

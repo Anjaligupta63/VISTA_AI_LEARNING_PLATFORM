@@ -9,16 +9,24 @@ export default function PomodoroPage() {
   const [running, setRunning] = useState(false);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+  let timer: NodeJS.Timeout;
 
-    if (running && time > 0) {
-      timer = setInterval(() => {
-        setTime((prev) => prev - 1);
-      }, 1000);
-    }
+  if (running && time > 0) {
+    timer = setInterval(() => {
+      setTime((prev) => prev - 1);
+    }, 1000);
+  }
 
-    return () => clearInterval(timer);
-  }, [running, time]);
+  if (time === 0) {
+    setRunning(false);
+
+    alert(
+      "Pomodoro Session Completed 🎉"
+    );
+  }
+
+  return () => clearInterval(timer);
+}, [running, time]);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -97,29 +105,35 @@ export default function PomodoroPage() {
 
               <div className="flex flex-wrap justify-center gap-4 mt-10">
 
-                <button
-                  onClick={() => setRunning(true)}
-                  className="px-6 py-3 rounded-xl bg-green-600 hover:bg-green-500 transition"
-                >
-                  Start
-                </button>
+               <button
+  onClick={() => {
+    if (!running) {
+      setRunning(true);
+    }
+  }}
+  className="px-6 py-3 rounded-xl bg-green-600 hover:bg-green-500 transition"
+>
+  Start
+</button>
 
                 <button
-                  onClick={() => setRunning(false)}
-                  className="px-6 py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 transition"
-                >
-                  Pause
-                </button>
+  onClick={() =>
+    setRunning(false)
+  }
+  className="px-6 py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 transition"
+>
+  Pause
+</button>
 
                 <button
-                  onClick={() => {
-                    setRunning(false);
-                    setTime(25 * 60);
-                  }}
-                  className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 transition"
-                >
-                  Reset
-                </button>
+  onClick={() => {
+    setRunning(false);
+    setTime(25 * 60);
+  }}
+  className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 transition"
+>
+  Reset
+</button>
 
               </div>
 

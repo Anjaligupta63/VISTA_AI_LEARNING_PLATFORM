@@ -1,8 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import {
+  usePathname,
+  useRouter,
+} from "next/navigation";
+
 import { user } from "@/data/user";
+
 import {
   LayoutDashboard,
   BookOpen,
@@ -12,10 +17,27 @@ import {
   User,
   Trophy,
   Sparkles,
+  LogOut,
 } from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    const confirmLogout =
+      window.confirm(
+        "Are you sure you want to logout?"
+      );
+
+    if (!confirmLogout) return;
+
+    localStorage.removeItem("token");
+
+    alert("Logged Out Successfully ✅");
+
+    router.push("/login");
+  };
 
   const menuItems = [
     {
@@ -86,10 +108,15 @@ export default function Sidebar() {
 
           const isActive =
             pathname === item.href ||
-            pathname.startsWith(item.href + "/");
+            pathname.startsWith(
+              item.href + "/"
+            );
 
           return (
-            <Link key={item.name} href={item.href}>
+            <Link
+              key={item.name}
+              href={item.href}
+            >
               <div
                 className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-300 cursor-pointer
 
@@ -102,7 +129,9 @@ export default function Sidebar() {
               >
                 <Icon size={20} />
 
-                <span>{item.name}</span>
+                <span>
+                  {item.name}
+                </span>
               </div>
             </Link>
           );
@@ -129,6 +158,16 @@ export default function Sidebar() {
             <div className="w-[72%] h-2 bg-linear-to-r from-indigo-500 to-cyan-500 rounded-full" />
 
           </div>
+
+          {/* Logout Button */}
+
+          <button
+            onClick={handleLogout}
+            className="w-full mt-5 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-red-600 hover:bg-red-500 transition"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
 
         </div>
 
