@@ -1,176 +1,280 @@
 const prisma = require("../config/prisma");
 
 const getDashboardStats = async (
-  req,
-  res
+req,
+res
 ) => {
-  try {
-    const userId = req.user.id;
+try {
+const userId = req.user.id;
 
-    const courses =
-      await prisma.course.findMany({
-        where: {
-          userId,
-        },
-        include: {
-          notes: true,
-          quizzes: true,
-          flashcards: true,
-        },
-      });
 
-    const totalCourses =
-      courses.length;
+const courses =
+  await prisma.course.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      notes: true,
+      quizzes: true,
+      flashcards: true,
+    },
+  });
 
-    const totalNotes =
-      courses.reduce(
-        (sum, course) =>
-          sum +
-          course.notes.length,
-        0
+const totalCourses =
+  courses.length;
+
+const totalNotes =
+  courses.reduce(
+    (sum, course) =>
+      sum +
+      course.notes.length,
+    0
+  );
+
+const totalQuizzes =
+  courses.reduce(
+    (sum, course) =>
+      sum +
+      course.quizzes.length,
+    0
+  );
+
+const totalFlashcards =
+  courses.reduce(
+    (sum, course) =>
+      sum +
+      course.flashcards.length,
+    0
+  );
+
+const averageProgress =
+  totalCourses === 0
+    ? 0
+    : Math.round(
+        courses.reduce(
+          (sum, course) =>
+            sum +
+            course.progress,
+          0
+        ) / totalCourses
       );
 
-    const totalQuizzes =
-      courses.reduce(
-        (sum, course) =>
-          sum +
-          course.quizzes.length,
-        0
-      );
+res.json({
+  totalCourses,
+  totalNotes,
+  totalQuizzes,
+  totalFlashcards,
+  averageProgress,
+});
 
-    const totalFlashcards =
-      courses.reduce(
-        (sum, course) =>
-          sum +
-          course.flashcards.length,
-        0
-      );
 
-    const averageProgress =
-      totalCourses === 0
-        ? 0
-        : Math.round(
-            courses.reduce(
-              (sum, course) =>
-                sum +
-                course.progress,
-              0
-            ) / totalCourses
-          );
+} catch (error) {
+console.log(error);
 
-    res.json({
-      totalCourses,
-      totalNotes,
-      totalQuizzes,
-      totalFlashcards,
-      averageProgress,
-    });
-  } catch (error) {
-    console.log(error);
 
-    res.status(500).json({
-      message: error.message,
-    });
-  }
+res.status(500).json({
+  message: error.message,
+});
+
+
+}
 };
 
 const getRecentActivity = async (
-  req,
-  res
+req,
+res
 ) => {
-  try {
-    const userId = req.user.id;
+try {
+const userId = req.user.id;
 
-    const activities =
-      await prisma.course.findMany({
-        where: {
-          userId,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-        take: 5,
-      });
 
-    res.json(activities);
-  } catch (error) {
-    console.log(error);
+const activities =
+  await prisma.course.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 5,
+  });
 
-    res.status(500).json({
-      message: error.message,
-    });
-  }
+res.json(activities);
+
+
+} catch (error) {
+console.log(error);
+
+
+res.status(500).json({
+  message: error.message,
+});
+
+
+}
 };
 
 const getAnalytics = async (
-  req,
-  res
+req,
+res
 ) => {
-  try {
-    const userId = req.user.id;
+try {
+const userId = req.user.id;
 
-    const courses =
-      await prisma.course.findMany({
-        where: {
-          userId,
-        },
-        include: {
-          notes: true,
-          quizzes: true,
-          flashcards: true,
-        },
-      });
 
-    const completedCourses =
-      courses.filter(
-        (course) =>
-          course.progress ===
-          100
-      ).length;
+const courses =
+  await prisma.course.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      notes: true,
+      quizzes: true,
+      flashcards: true,
+    },
+  });
 
-    const totalNotes =
-      courses.reduce(
-        (sum, course) =>
-          sum +
-          course.notes.length,
-        0
-      );
+const completedCourses =
+  courses.filter(
+    (course) =>
+      course.progress === 100
+  ).length;
 
-    const totalQuizzes =
-      courses.reduce(
-        (sum, course) =>
-          sum +
-          course.quizzes.length,
-        0
-      );
+const totalNotes =
+  courses.reduce(
+    (sum, course) =>
+      sum +
+      course.notes.length,
+    0
+  );
 
-    const totalFlashcards =
-      courses.reduce(
-        (sum, course) =>
-          sum +
-          course.flashcards.length,
-        0
-      );
+const totalQuizzes =
+  courses.reduce(
+    (sum, course) =>
+      sum +
+      course.quizzes.length,
+    0
+  );
 
-    res.json({
-      totalCourses:
-        courses.length,
-      completedCourses,
-      totalNotes,
-      totalQuizzes,
-      totalFlashcards,
-    });
-  } catch (error) {
-    console.log(error);
+const totalFlashcards =
+  courses.reduce(
+    (sum, course) =>
+      sum +
+      course.flashcards.length,
+    0
+  );
 
-    res.status(500).json({
-      message: error.message,
-    });
-  }
+res.json({
+  totalCourses:
+    courses.length,
+  completedCourses,
+  totalNotes,
+  totalQuizzes,
+  totalFlashcards,
+});
+
+
+} catch (error) {
+console.log(error);
+
+
+res.status(500).json({
+  message: error.message,
+});
+
+
+}
+};
+
+const getCourseProgress = async (
+req,
+res
+) => {
+try {
+const userId = req.user.id;
+
+
+const courses =
+  await prisma.course.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      id: true,
+      title: true,
+      progress: true,
+    },
+  });
+
+res.json(courses);
+
+
+} catch (error) {
+console.log(error);
+
+
+res.status(500).json({
+  message: error.message,
+});
+
+
+}
+};
+
+const getPomodoroStats = async (
+req,
+res
+) => {
+try {
+const userId = req.user.id;
+
+
+const sessions =
+  await prisma.studySession.findMany({
+    where: {
+      userId,
+    },
+  });
+
+const totalMinutes =
+  sessions.reduce(
+    (sum, session) =>
+      sum + session.duration,
+    0
+  );
+
+const focusHours =
+  (
+    totalMinutes / 60
+  ).toFixed(1);
+
+const focusCoins =
+  totalMinutes;
+
+res.json({
+  focusHours,
+  focusCoins,
+  sessionsCount:
+    sessions.length,
+});
+
+
+} catch (error) {
+console.log(error);
+
+
+res.status(500).json({
+  message: error.message,
+});
+
+
+}
 };
 
 module.exports = {
-  getDashboardStats,
-  getRecentActivity,
-  getAnalytics,
+getDashboardStats,
+getRecentActivity,
+getAnalytics,
+getCourseProgress,
+getPomodoroStats,
 };

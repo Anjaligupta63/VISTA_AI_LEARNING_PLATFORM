@@ -1,5 +1,5 @@
 "use client";
-
+import AuthGuard from "@/components/AuthGuard";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
@@ -469,6 +469,7 @@ const handleGenerateFlashcards =
   }
 
   return (
+    <AuthGuard>
     <div className="flex min-h-screen bg-slate-950 text-white">
       <Sidebar />
 
@@ -721,5 +722,6 @@ const handleGenerateFlashcards =
         </main>
       </div>
     </div>
+    </AuthGuard>
   );
 }

@@ -1,11 +1,8 @@
 "use client";
 
-import {
-  useEffect,
-  useState,
-} from "react";
-
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import api from "@/lib/api";
 
 export default function AuthGuard({
   children,
@@ -14,20 +11,33 @@ export default function AuthGuard({
 }) {
   const router = useRouter();
 
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token =
-      localStorage.getItem("token");
+    checkAuth();
+  }, []);
 
-    if (!token) {
-      router.push("/login");
-      return;
+  const checkAuth = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        router.replace("/login");
+        return;
+      }
+
+      await api.get("/auth/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setLoading(false);
+    } catch (error) {
+      localStorage.removeItem("token");
+      router.replace("/login");
     }
-
-    setLoading(false);
-  }, [router]);
+  };
 
   if (loading) {
     return (

@@ -1,38 +1,100 @@
 "use client";
-
+import AuthGuard from "@/components/AuthGuard";
 import { useState, useEffect } from "react";
 import Sidebar from "@/components/dashboard/Sidebar";
 import MobileNavbar from "@/components/dashboard/MobileNavbar";
+import api from "@/lib/api";
 
 export default function PomodoroPage() {
   const [time, setTime] = useState(25 * 60);
   const [running, setRunning] = useState(false);
 
+  const [sessionMinutes, setSessionMinutes] =
+    useState(25);
+
+  const [stats, setStats] = useState({
+    focusHours: "0.0",
+    focusCoins: 0,
+    sessionsCount: 0,
+  });
+
+  const fetchStats = async () => {
+    try {
+      const token =
+        localStorage.getItem("token");
+
+      const res = await api.get(
+        "/dashboard/pomodoro-stats",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setStats(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const saveSession = async () => {
+    try {
+      const token =
+        localStorage.getItem("token");
+
+      await api.post(
+        "/pomodoro/save",
+        {
+          duration: sessionMinutes,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      await fetchStats();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-  let timer: NodeJS.Timeout;
+    fetchStats();
+  }, []);
 
-  if (running && time > 0) {
-    timer = setInterval(() => {
-      setTime((prev) => prev - 1);
-    }, 1000);
-  }
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
 
-  if (time === 0) {
-    setRunning(false);
+    if (running && time > 0) {
+      timer = setInterval(() => {
+        setTime((prev) => prev - 1);
+      }, 1000);
+    }
 
-    alert(
-      "Pomodoro Session Completed 🎉"
-    );
-  }
+    if (time === 0) {
+      setRunning(false);
 
-  return () => clearInterval(timer);
-}, [running, time]);
+      saveSession();
+
+      alert(
+        "Pomodoro Session Completed 🎉"
+      );
+    }
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [running, time]);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
 
   return (
-    <div className="flex min-h-screen bg-slate-950 text-white">
+    <AuthGuard>
+      <div className="flex min-h-screen bg-slate-950 text-white">
 
       <Sidebar />
 
@@ -50,38 +112,44 @@ export default function PomodoroPage() {
             Improve productivity with focused study sessions.
           </p>
 
-          {/* Stats */}
+          {/* Dynamic Stats */}
 
           <div className="grid md:grid-cols-3 gap-6 mt-8">
 
             <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+
               <p className="text-slate-400">
-                Today's Focus
+                Total Focus Hours
               </p>
 
               <h2 className="text-4xl font-bold mt-2">
-                4.5h
+                {stats.focusHours}h
               </h2>
+
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+
               <p className="text-slate-400">
-                Current Streak
+                Completed Sessions
               </p>
 
               <h2 className="text-4xl font-bold mt-2">
-                12 Days
+                {stats.sessionsCount}
               </h2>
+
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+
               <p className="text-slate-400">
                 Focus Coins
               </p>
 
               <h2 className="text-4xl font-bold mt-2">
-                420
+                {stats.focusCoins}
               </h2>
+
             </div>
 
           </div>
@@ -105,35 +173,37 @@ export default function PomodoroPage() {
 
               <div className="flex flex-wrap justify-center gap-4 mt-10">
 
-               <button
-  onClick={() => {
-    if (!running) {
-      setRunning(true);
-    }
-  }}
-  className="px-6 py-3 rounded-xl bg-green-600 hover:bg-green-500 transition"
->
-  Start
-</button>
+                <button
+                  onClick={() => {
+                    if (!running) {
+                      setRunning(true);
+                    }
+                  }}
+                  className="px-6 py-3 rounded-xl bg-green-600 hover:bg-green-500 transition"
+                >
+                  Start
+                </button>
 
                 <button
-  onClick={() =>
-    setRunning(false)
-  }
-  className="px-6 py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 transition"
->
-  Pause
-</button>
+                  onClick={() =>
+                    setRunning(false)
+                  }
+                  className="px-6 py-3 rounded-xl bg-yellow-600 hover:bg-yellow-500 transition"
+                >
+                  Pause
+                </button>
 
                 <button
-  onClick={() => {
-    setRunning(false);
-    setTime(25 * 60);
-  }}
-  className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 transition"
->
-  Reset
-</button>
+                  onClick={() => {
+                    setRunning(false);
+                    setTime(
+                      sessionMinutes * 60
+                    );
+                  }}
+                  className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 transition"
+                >
+                  Reset
+                </button>
 
               </div>
 
@@ -148,6 +218,7 @@ export default function PomodoroPage() {
             <button
               onClick={() => {
                 setRunning(false);
+                setSessionMinutes(25);
                 setTime(25 * 60);
               }}
               className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:border-indigo-500"
@@ -164,6 +235,7 @@ export default function PomodoroPage() {
             <button
               onClick={() => {
                 setRunning(false);
+                setSessionMinutes(50);
                 setTime(50 * 60);
               }}
               className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:border-indigo-500"
@@ -180,6 +252,7 @@ export default function PomodoroPage() {
             <button
               onClick={() => {
                 setRunning(false);
+                setSessionMinutes(90);
                 setTime(90 * 60);
               }}
               className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:border-indigo-500"
@@ -200,5 +273,6 @@ export default function PomodoroPage() {
       </div>
 
     </div>
+    </AuthGuard>
   );
 }

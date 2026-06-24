@@ -3,27 +3,31 @@ import { GraduationCap } from "lucide-react";
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-slate-950/60 border-b border-slate-800">
+    <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-slate-950/70 border-b border-slate-800">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-5">
 
+        {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2"
+          className="flex items-center gap-3"
         >
-          <GraduationCap className="text-indigo-500" />
+          <GraduationCap
+            size={28}
+            className="text-indigo-500"
+          />
 
-          <h1 className="font-bold text-xl">
-            VISTA
-          </h1>
+          <div>
+            <h1 className="font-bold text-2xl">
+              VISTA
+            </h1>
+
+            <p className="text-xs text-slate-500">
+              Learn • Focus • Grow
+            </p>
+          </div>
         </Link>
 
-        <div className="hidden md:flex gap-8 text-slate-300">
-          <a href="#features">Features</a>
-          <a href="#courses">Courses</a>
-          <a href="#analytics">Analytics</a>
-          <a href="#about">About</a>
-        </div>
-
+        {/* Right Side */}
         <div className="flex items-center gap-3">
 
           <Link
@@ -37,7 +41,7 @@ export default function Navbar() {
             href="/signup"
             className="px-5 py-2 rounded-xl bg-linear-to-r from-indigo-600 to-cyan-500 hover:scale-105 transition"
           >
-            Sign Up
+            Get Started
           </Link>
 
         </div>

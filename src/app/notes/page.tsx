@@ -1,5 +1,5 @@
 "use client";
-
+import AuthGuard from "@/components/AuthGuard";
 import { useEffect, useState } from "react";
 
 import Sidebar from "@/components/dashboard/Sidebar";
@@ -68,6 +68,7 @@ export default function NotesPage() {
   };
 
   return (
+    <AuthGuard>
     <div className="flex min-h-screen bg-slate-950 text-white">
       <Sidebar />
 
@@ -104,5 +105,6 @@ export default function NotesPage() {
         )}
       </main>
     </div>
+    </AuthGuard>
   );
 }

@@ -1,7 +1,6 @@
 const express = require("express");
 
-const router =
-  express.Router();
+const router = express.Router();
 
 const authMiddleware = require(
   "../middleware/authMiddleware"
@@ -10,7 +9,9 @@ const authMiddleware = require(
 const {
   getDashboardStats,
   getRecentActivity,
-    getAnalytics,
+  getAnalytics,
+  getCourseProgress,
+  getPomodoroStats,
 } = require(
   "../controllers/dashboardController"
 );
@@ -26,9 +27,23 @@ router.get(
   authMiddleware,
   getRecentActivity
 );
+
 router.get(
   "/analytics",
   authMiddleware,
   getAnalytics
 );
+
+router.get(
+  "/course-progress",
+  authMiddleware,
+  getCourseProgress
+);
+
+router.get(
+  "/pomodoro-stats",
+  authMiddleware,
+  getPomodoroStats
+);
+
 module.exports = router;

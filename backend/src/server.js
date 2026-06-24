@@ -11,7 +11,11 @@ const flashcardRoutes = require("./routes/flashcardRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const certificateRoutes = require("./routes/certificateRoutes");
 const achievementsRoutes = require("./routes/achievementsRoutes");
-
+const pomodoroRoutes =
+require("./routes/pomodoroRoutes");
+const aiRoutes = require(
+  "./routes/aiRoutes"
+);
 const app = express();
 
 
@@ -30,8 +34,14 @@ app.use("/api/flashcards", flashcardRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/certificate", certificateRoutes);
 app.use("/api/achievements", achievementsRoutes);
-
-
+app.use(
+"/api/pomodoro",
+pomodoroRoutes
+);
+app.use(
+  "/api/ai",
+  aiRoutes
+);
 app.get("/", (req, res) => {
   res.json({
     message: "VISTA Backend Running 🚀",

@@ -1,8 +1,10 @@
+import AuthGuard from "@/components/AuthGuard";
 import Sidebar from "@/components/dashboard/Sidebar";
 
 export default function MotivationPage() {
   return (
-    <div className="flex min-h-screen bg-slate-950 text-white">
+    <AuthGuard>
+      <div className="flex min-h-screen bg-slate-950 text-white">
 
       <Sidebar />
 
@@ -13,97 +15,222 @@ export default function MotivationPage() {
         </h1>
 
         <p className="text-slate-400 mt-2">
-          Stay inspired. Stay disciplined.
+          Stay inspired. Stay disciplined. Stay unstoppable.
         </p>
 
-        {/* Daily Quote */}
+        {/* Hero Section */}
 
-        <div className="mt-8 bg-linear-to-r from-indigo-600 to-cyan-600 rounded-3xl p-8">
+        <div className="mt-8 bg-linear-to-r from-indigo-600 via-purple-600 to-cyan-600 rounded-3xl p-8">
 
-          <h2 className="text-2xl font-bold">
-            Daily Quote
+          <h2 className="text-3xl font-bold">
+            🚀 Today's Mindset
           </h2>
 
-          <p className="mt-4 text-lg">
-            "Success doesn't come from motivation.
-            It comes from discipline."
+          <p className="mt-6 text-xl leading-relaxed">
+
+            You don't need to be motivated every day.
+
+            <br />
+            <br />
+
+            You only need to be consistent.
+
+            <br />
+            <br />
+
+            The version of yourself you dream about
+            is created by the choices you make today.
+
+            <br />
+            <br />
+
+            Open the course.
+            Start the timer.
+            Take the next step.
+
           </p>
 
         </div>
 
-        {/* Categories */}
+        {/* Reminder + Challenge */}
 
-        <div className="grid md:grid-cols-2 gap-6 mt-8">
+        <div className="grid lg:grid-cols-2 gap-6 mt-8">
 
           <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
 
             <h2 className="text-2xl font-bold mb-4">
-              📚 Before Study
+              🎯 Remember Why You Started
             </h2>
 
-            <ul className="space-y-3 text-slate-300">
-              <li>• Deep Work</li>
-              <li>• Study With Me</li>
-              <li>• Productivity Tips</li>
-              <li>• Focus Music</li>
-            </ul>
+            <p className="text-slate-300 leading-8">
+
+              Every chapter completed.
+
+              <br />
+
+              Every quiz attempted.
+
+              <br />
+
+              Every Pomodoro session finished.
+
+              <br />
+              <br />
+
+              These small wins are building the future
+              version of yourself.
+
+              <br />
+              <br />
+
+              Keep going.
+
+            </p>
 
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
 
             <h2 className="text-2xl font-bold mb-4">
-              🔥 During Burnout
+              ⚡ Today's Challenge
             </h2>
 
-            <ul className="space-y-3 text-slate-300">
-              <li>• Success Stories</li>
-              <li>• Comeback Videos</li>
-              <li>• Mindset Training</li>
-              <li>• Motivation Shorts</li>
-            </ul>
+            <div className="space-y-4">
+
+              <div className="bg-slate-900 rounded-xl p-4">
+                ✅ Complete 1 Course Lesson
+              </div>
+
+              <div className="bg-slate-900 rounded-xl p-4">
+                🧠 Review 5 Flashcards
+              </div>
+
+              <div className="bg-slate-900 rounded-xl p-4">
+                📚 Generate 1 Note
+              </div>
+
+              <div className="bg-slate-900 rounded-xl p-4">
+                ⏳ Finish 1 Pomodoro Session
+              </div>
+
+            </div>
 
           </div>
 
         </div>
 
-        {/* Placement Motivation */}
+        {/* Quotes */}
 
         <div className="mt-8 bg-white/5 border border-white/10 rounded-3xl p-6">
 
-          <h2 className="text-2xl font-bold mb-4">
-            🚀 Placement Preparation
+          <h2 className="text-2xl font-bold mb-6">
+            🔥 Powerful Reminders
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-4">
+
+            <div className="bg-slate-900 rounded-xl p-5">
+              Discipline is choosing what you want most
+              over what you want now.
+            </div>
+
+            <div className="bg-slate-900 rounded-xl p-5">
+              Small progress every day adds up to
+              massive results.
+            </div>
+
+            <div className="bg-slate-900 rounded-xl p-5">
+              Dreams work only when you do.
+            </div>
+
+            <div className="bg-slate-900 rounded-xl p-5">
+              Your future self is watching your
+              decisions today.
+            </div>
+
+            <div className="bg-slate-900 rounded-xl p-5">
+              Success is not built in a day.
+              It is built daily.
+            </div>
+
+            <div className="bg-slate-900 rounded-xl p-5">
+              Consistency beats motivation.
+              Every single time.
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* Career Motivation */}
+
+        <div className="mt-8 bg-white/5 border border-white/10 rounded-3xl p-6">
+
+          <h2 className="text-2xl font-bold mb-6">
+            🚀 Career Motivation
           </h2>
 
           <div className="grid md:grid-cols-3 gap-4">
 
-            <div className="bg-slate-900 rounded-xl p-4">
-              GSoC Journey
+            <div className="bg-slate-900 rounded-xl p-5 hover:border-indigo-500 transition">
+              <h3 className="font-semibold">
+                💼 Internship Success Stories
+              </h3>
+
+              <p className="text-slate-400 text-sm mt-2">
+                Learn how students secured top internships.
+              </p>
             </div>
 
-            <div className="bg-slate-900 rounded-xl p-4">
-              Internship Success
+            <div className="bg-slate-900 rounded-xl p-5 hover:border-indigo-500 transition">
+              <h3 className="font-semibold">
+                🌟 GSoC & Open Source Journeys
+              </h3>
+
+              <p className="text-slate-400 text-sm mt-2">
+                Discover real stories from contributors.
+              </p>
             </div>
 
-            <div className="bg-slate-900 rounded-xl p-4">
-              FAANG Placement Stories
+            <div className="bg-slate-900 rounded-xl p-5 hover:border-indigo-500 transition">
+              <h3 className="font-semibold">
+                🏆 FAANG Placement Experiences
+              </h3>
+
+              <p className="text-slate-400 text-sm mt-2">
+                Learn the roadmap followed by achievers.
+              </p>
             </div>
 
           </div>
 
         </div>
 
-        {/* Women in Tech */}
+        {/* Final Message */}
 
-        <div className="mt-8 bg-white/5 border border-white/10 rounded-3xl p-6">
+        <div className="mt-8 bg-linear-to-r from-green-600/20 to-cyan-600/20 border border-green-500/20 rounded-3xl p-8 text-center">
 
-          <h2 className="text-2xl font-bold mb-4">
-            👩‍💻 Women in Tech
+          <h2 className="text-3xl font-bold">
+            🌱 One Day or Day One
           </h2>
 
-          <p className="text-slate-300">
-            Inspiring journeys, talks, and success stories
-            from women engineers and leaders in technology.
+          <p className="text-xl text-slate-300 mt-4 max-w-3xl mx-auto">
+
+            The difference between successful people
+            and everyone else is not talent.
+
+            <br />
+            <br />
+
+            It's the willingness to start,
+            continue, and never quit.
+
+            <br />
+            <br />
+
+            Today is another opportunity to become
+            the person you want to be.
+
           </p>
 
         </div>
@@ -111,5 +238,6 @@ export default function MotivationPage() {
       </main>
 
     </div>
+    </AuthGuard>
   );
 }

@@ -16,6 +16,7 @@ model User {
   createdAt DateTime @default(now())
 
   courses Course[]
+  studySessions StudySession[]
 }
 
 model Course {
@@ -96,6 +97,16 @@ model FocusSession {
   userId    Int
 
   duration  Int
+
+  createdAt DateTime @default(now())
+}
+model StudySession {
+  id        Int      @id @default(autoincrement())
+
+  duration  Int
+
+  userId    Int
+  user      User @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
 }
