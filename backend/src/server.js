@@ -13,9 +13,7 @@ const certificateRoutes = require("./routes/certificateRoutes");
 const achievementsRoutes = require("./routes/achievementsRoutes");
 const pomodoroRoutes =
 require("./routes/pomodoroRoutes");
-const aiRoutes = require(
-  "./routes/aiRoutes"
-);
+
 const app = express();
 
 
@@ -38,10 +36,7 @@ app.use(
 "/api/pomodoro",
 pomodoroRoutes
 );
-app.use(
-  "/api/ai",
-  aiRoutes
-);
+
 app.get("/", (req, res) => {
   res.json({
     message: "VISTA Backend Running 🚀",
