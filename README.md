@@ -5,7 +5,6 @@ VISTA is a full-stack AI-powered learning platform designed to make studying sma
 ## ✨ Key Features
 - 📚 Course Management
 - 🤖 AI Notes, Quiz & Flashcard Generator
-- 💬 AI Tutor Chat
 - 📊 Learning Dashboard & Progress Tracking
 - ⏱ Pomodoro Timer & Study Sessions
 - 🏆 Certificate Generation
