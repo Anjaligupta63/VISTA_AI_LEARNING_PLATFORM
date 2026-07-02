@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 VISTA – AI-Powered EdTech & Productivity Platform
 
-## Getting Started
+VISTA is a full-stack AI-powered learning platform designed to make studying smarter and more interactive. It enables users to manage courses, generate AI-powered notes, quizzes, and flashcards using Google Gemini AI, track learning progress, and boost productivity with features like a Pomodoro timer, study analytics, and course completion certificates.
 
-First, run the development server:
+## ✨ Key Features
+- 📚 Course Management
+- 🤖 AI Notes, Quiz & Flashcard Generator
+- 💬 AI Tutor Chat
+- 📊 Learning Dashboard & Progress Tracking
+- ⏱ Pomodoro Timer & Study Sessions
+- 🏆 Certificate Generation
+- 🔐 JWT Authentication
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠 Tech Stack
+- **Frontend:** Next.js, React.js, TypeScript, Tailwind CSS
+- **Backend:** Node.js, Express.js
+- **Database:** PostgreSQL (Neon) with Prisma ORM
+- **AI:** Google Gemini 2.5 Flash API
+- **Authentication:** JWT & bcrypt
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+VISTA provides an intelligent and modern learning experience by combining AI-powered study assistance with productivity tools in a single platform.
