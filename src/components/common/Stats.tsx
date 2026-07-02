@@ -1,9 +1,9 @@
 export default function Stats() {
   const stats = [
-    { value: "10K+", label: "Students" },
-    { value: "50K+", label: "Hours Focused" },
-    { value: "95%", label: "Quiz Accuracy" },
-    { value: "500+", label: "Courses" },
+    { value: "10+", label: "AI Features" },
+    { value: "<2s", label: "AI Response Time" },
+    { value: "24/7", label: "AI Tutor Support" },
+    { value: "Unlimited", label: "Courses" },
   ];
 
   return (

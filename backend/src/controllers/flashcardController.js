@@ -1,5 +1,5 @@
 const prisma = require("../config/prisma");
-
+const { generateContent } = require("../services/geminiService");
 const getFlashcards = async (
   req,
   res
@@ -25,66 +25,56 @@ const getFlashcards = async (
   }
 };
 
-const createFlashcards = async (
-  req,
-  res
-) => {
+const createFlashcards = async (req, res) => {
   try {
-    const courseId = Number(
-      req.params.courseId
-    );
+    const courseId = Number(req.params.courseId);
 
-    const existing =
-      await prisma.flashcard.findMany({
-        where: {
-          courseId,
-        },
-      });
+    const course = await prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
 
-    if (existing.length > 0) {
-      return res.status(400).json({
-        message:
-          "Flashcards already generated",
+    if (!course) {
+      return res.status(404).json({
+        message: "Course not found",
       });
     }
 
-    await prisma.flashcard.createMany({
-      data: [
-        {
-          question:
-            "What is DSA?",
-          answer:
-            "Data Structures and Algorithms",
-          courseId,
-        },
-        {
-          question:
-            "Why learn DSA?",
-          answer:
-            "To solve problems efficiently",
-          courseId,
-        },
-        {
-          question:
-            "What is Time Complexity?",
-          answer:
-            "Measure of algorithm performance",
-          courseId,
-        },
-      ],
+    const prompt = `
+Generate 15 flashcards on:
+
+Title: ${course.title}
+
+Description:
+${course.description}
+
+Format:
+
+Q: Question
+
+A: Answer
+`;
+
+    const aiFlashcards = await generateContent(prompt);
+
+    const flashcard = await prisma.flashcard.create({
+      data: {
+        content: aiFlashcards,
+        courseId,
+      },
     });
 
-    res.status(201).json({
-      message:
-        "Flashcards generated successfully",
-    });
+    res.status(201).json(flashcard);
+
   } catch (error) {
+    console.log("Flashcard Error:", error);
+
     res.status(500).json({
       message: error.message,
     });
   }
 };
-
 const deleteFlashcard =
   async (req, res) => {
     try {

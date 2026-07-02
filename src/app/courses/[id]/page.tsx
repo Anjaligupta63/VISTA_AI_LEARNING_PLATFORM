@@ -21,13 +21,11 @@ type Note = {
 };
 type Quiz = {
   id: number;
-  question: string;
-  answer: string;
+  content: string;
 };
 type Flashcard = {
   id: number;
-  question: string;
-  answer: string;
+   content: string;
 };
 export default function CourseDetailPage() {
   const params = useParams();
@@ -651,16 +649,9 @@ const handleGenerateFlashcards =
             🗑
           </button>
 
-          <p className="pr-10">
-            <strong>
-              Q.
-            </strong>{" "}
-            {quiz.question}
-          </p>
-
-          <p className="mt-2 text-slate-400 pr-10">
-            Answer: {quiz.answer}
-          </p>
+         <pre className="whitespace-pre-wrap text-slate-300 pr-10">
+  {quiz.content}
+</pre>
         </div>
       ))}
     </div>
@@ -705,13 +696,9 @@ const handleGenerateFlashcards =
       🗑
     </button>
 
-    <p className="font-semibold pr-10">
-      Q: {card.question}
-    </p>
-
-    <p className="mt-2 text-slate-400 pr-10">
-      A: {card.answer}
-    </p>
+   <pre className="whitespace-pre-wrap text-slate-300 pr-10">
+  {card.content}
+</pre>
   </div>
 ))}
       </div>

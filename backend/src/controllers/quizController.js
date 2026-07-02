@@ -1,5 +1,5 @@
 const prisma = require("../config/prisma");
-
+const { generateContent } = require("../services/geminiService");
 const getQuizzes = async (req, res) => {
   try {
     const quizzes = await prisma.quiz.findMany({
@@ -21,62 +21,53 @@ const getQuizzes = async (req, res) => {
 
 const createQuiz = async (req, res) => {
   try {
-    const questions = [
-      {
-        question:
-          "What is a Data Structure?",
-        answer:
-          "A way of organizing and storing data.",
-      },
-      {
-        question:
-          "What is an Algorithm?",
-        answer:
-          "A step-by-step procedure to solve a problem.",
-      },
-      {
-        question:
-          "What is Big O Notation?",
-        answer:
-          "A way to measure algorithm efficiency.",
-      },
-      {
-        question:
-          "Difference between Stack and Queue?",
-        answer:
-          "Stack is LIFO, Queue is FIFO.",
-      },
-      {
-        question:
-          "What is Binary Search?",
-        answer:
-          "A searching algorithm for sorted arrays.",
-      },
-    ];
+    const courseId = Number(req.params.courseId);
 
-    const createdQuiz = [];
+    const course = await prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+    });
 
-    for (const item of questions) {
-      const quiz =
-        await prisma.quiz.create({
-          data: {
-            question:
-              item.question,
-            answer:
-              item.answer,
-            courseId: Number(
-              req.params.courseId
-            ),
-          },
-        });
-
-      createdQuiz.push(quiz);
+    if (!course) {
+      return res.status(404).json({
+        message: "Course not found",
+      });
     }
 
-    res.status(201).json(
-      createdQuiz
-    );
+    const prompt = `
+Generate 10 multiple choice questions on:
+
+Title: ${course.title}
+
+Description:
+${course.description}
+
+Format:
+
+Question:
+A.
+B.
+C.
+D.
+
+Correct Answer:
+`;
+
+    const aiQuiz = await generateContent(prompt);
+
+    const quiz = await prisma.quiz.create({
+      data: {
+        content: aiQuiz,
+        courseId,
+      },
+    });
+
+    res.status(201).json(quiz);
+
   } catch (error) {
+    console.log("Create Quiz Error:", error);
+
     res.status(500).json({
       message: error.message,
     });

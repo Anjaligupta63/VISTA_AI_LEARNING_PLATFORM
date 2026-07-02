@@ -1,53 +1,23 @@
-const {
-  GoogleGenerativeAI,
-} = require("@google/generative-ai");
-console.log(
-  "GEMINI KEY:",
-  process.env.GEMINI_API_KEY
-);
-const genAI =
-  new GoogleGenerativeAI(
-    process.env.GEMINI_API_KEY
-  );
+const { GoogleGenAI } = require("@google/genai");
 
-const model =
-  genAI.getGenerativeModel({
-    model: "gemini-2.0-flash",
-  });
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
-const generateNotes = async (title, description) => {
+const generateContent = async (prompt) => {
   try {
-    const prompt = `
-Create detailed study notes for:
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+    });
 
-Title: ${title}
-
-Description:
-${description}
-
-Format:
-1. Introduction
-2. Important Concepts
-3. Key Points
-4. Summary
-
-Use teacher-style explanations.
-`;
-
-    const result = await model.generateContent(prompt);
-
-    console.log(result.response.text());
-
-    return result.response.text();
+    return response.text;
   } catch (error) {
-    console.log("GEMINI ERROR:");
-    console.log(error);
+    console.log("Gemini Error:", error);
     throw error;
   }
 };
 
-    
-
 module.exports = {
-  generateNotes,
+  generateContent,
 };

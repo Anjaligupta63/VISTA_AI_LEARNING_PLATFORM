@@ -14,41 +14,41 @@ export default function DashboardPreview() {
 
             <div className="bg-slate-900 rounded-2xl p-6">
               <h3 className="text-slate-400">
-                Focus Hours
+                AI Notes
               </h3>
 
-              <p className="text-4xl font-bold mt-2">
-                128h
+              <p className="text-4xl font-bold mt-2 text-indigo-400">
+                Smart
               </p>
             </div>
 
             <div className="bg-slate-900 rounded-2xl p-6">
               <h3 className="text-slate-400">
-                Courses
+                Quiz Generator
               </h3>
 
-              <p className="text-4xl font-bold mt-2">
-                12
+              <p className="text-4xl font-bold mt-2 text-indigo-400">
+                AI
               </p>
             </div>
 
             <div className="bg-slate-900 rounded-2xl p-6">
               <h3 className="text-slate-400">
-                Accuracy
+                Flashcards
               </h3>
 
-              <p className="text-4xl font-bold mt-2">
-                91%
+              <p className="text-4xl font-bold mt-2 text-indigo-400">
+                Auto
               </p>
             </div>
 
             <div className="bg-slate-900 rounded-2xl p-6">
               <h3 className="text-slate-400">
-                Streak
+                Progress Tracking
               </h3>
 
-              <p className="text-4xl font-bold mt-2">
-                28 Days
+              <p className="text-4xl font-bold mt-2 text-indigo-400">
+                Live
               </p>
             </div>
 

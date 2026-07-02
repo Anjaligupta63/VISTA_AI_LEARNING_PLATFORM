@@ -50,25 +50,19 @@ model Note {
 }
 
 model Quiz {
-  id Int @id @default(autoincrement())
-
-  question String
-  answer   String
-
-  courseId Int
-  course   Course @relation(fields: [courseId], references: [id])
-
-  createdAt DateTime @default(now())
-}
-
-model Flashcard {
   id        Int      @id @default(autoincrement())
-
-  question  String
-  answer    String
-
+  content   String
   courseId  Int
   course    Course   @relation(fields: [courseId], references: [id])
+  createdAt DateTime @default(now())
+}
+model Flashcard {
+  id Int @id @default(autoincrement())
+
+  content String
+
+  courseId Int
+  course Course @relation(fields:[courseId], references:[id])
 
   createdAt DateTime @default(now())
 }
